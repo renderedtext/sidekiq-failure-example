@@ -1,0 +1,18 @@
+version: "2.0"
+
+volumes:
+  redis-data:
+    driver: local
+
+services:
+
+  worker:
+    build: .
+    links:
+      - redis:redis
+
+  redis:
+    image: redis:3.2.4-alpine
+    volumes:
+      - redis-data:/var/lib/redis
+    command: redis-server --appendonly yes
